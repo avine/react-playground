@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import './Person.css';
+import styles from './Person.module.scss';
 
 export interface IPerson {
   id: number;
@@ -19,7 +19,7 @@ const Person = (props: IPersonProps) => {
   };
 
   return (
-    <p className="Person">
+    <p className={styles.Person}>
       {props.person.name}<br />
       <input onChange={inputHandler} value={props.person.name} />
     </p>
