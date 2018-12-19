@@ -1,25 +1,40 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
+import Person, { IPerson } from './Person/Person';
+
+interface IState {
+  persons: IPerson[];
+}
+
 class App extends Component {
-  render() {
+  public state: IState = {
+    persons: [
+      { id: 1, name: 'Stéphane' },
+      { id: 2, name: 'Fleur' }
+    ]
+  };
+
+  public changeHandler = (person: IPerson) => {
+    const persons = this.state.persons.slice();
+    const found = persons.filter(p => p.id === person.id)[0];
+
+    if (found) {
+      found.name = person.name;
+    }
+
+    const state: Partial<IState> = { persons };
+    this.setState(state);
+  };
+
+  public render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        {this.state.persons.map(person => <Person 
+          key={person.id}
+          person={person}
+          changeHandler={this.changeHandler}
+        />)}
       </div>
     );
   }
