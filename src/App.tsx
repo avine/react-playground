@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import Person, { IPerson } from './Person/Person';
+import Persons from './components/Persons/Persons';
+import { IPerson } from './components/Persons/Person/Person';
 
 interface IState {
   persons: IPerson[];
@@ -16,25 +17,15 @@ class App extends Component {
   };
 
   public changeHandler = (person: IPerson) => {
-    const persons = this.state.persons.slice();
-    const found = persons.filter(p => p.id === person.id)[0];
-
-    if (found) {
-      found.name = person.name;
-    }
-
-    const state: Partial<IState> = { persons };
-    this.setState(state);
+    this.setState((state: IState) => ({
+      persons: state.persons.map(p => p.id === person.id ? person : p)
+    }));
   };
 
   public render() {
     return (
       <div className="App">
-        {this.state.persons.map(person => <Person 
-          key={person.id}
-          person={person}
-          changeHandler={this.changeHandler}
-        />)}
+        <Persons persons={this.state.persons} changeHandler={this.changeHandler} />
       </div>
     );
   }
