@@ -40,7 +40,7 @@ class App extends Component<IAppProps, IAppState> {
   public render() {
     return (
       <div className="App">
-        <Header title="React playground" />
+        <Header title={this.props.title} />
         {
           this.state.persons.length
           ? <Persons 
