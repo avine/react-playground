@@ -10,6 +10,7 @@ export interface IPerson {
 export interface IPersonProps {
   person: IPerson;
   changeHandler: (person: IPerson) => void;
+  removeHandler: (person: IPerson) => void;
 }
 
 const Person = (props: IPersonProps) => {
@@ -18,10 +19,14 @@ const Person = (props: IPersonProps) => {
     props.changeHandler(newPerson);
   };
 
+  const buttonHandler = () => props.removeHandler(props.person);
+
   return (
     <p className={styles.Person}>
-      {props.person.name}<br />
+      {props.person.name}
+      <br />
       <input onChange={inputHandler} value={props.person.name} />
+      <button onClick={buttonHandler}>Remove</button>
     </p>
   );
 };
