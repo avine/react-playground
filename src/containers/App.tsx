@@ -11,6 +11,7 @@ interface IAppProps {
 
 interface IAppState {
   persons: IPerson[];
+  newId: number;
 }
 
 class App extends Component<IAppProps, IAppState> {
@@ -18,8 +19,16 @@ class App extends Component<IAppProps, IAppState> {
     persons: [
       { id: 1, name: 'Stéphane' },
       { id: 2, name: 'Fleur' }
-    ]
+    ],
+    newId: 3
   };
+
+  public addHandler = () => {
+    this.setState(state => ({
+      persons: [{ id: state.newId, name: '...' }, ...state.persons],
+      newId: state.newId + 1
+    }));
+  }
 
   public changeHandler = (person: IPerson) => {
     this.setState((state: IAppState) => ({
@@ -41,6 +50,7 @@ class App extends Component<IAppProps, IAppState> {
     return (
       <div className="App">
         <Header title={this.props.title} />
+        <button onClick={this.addHandler}>Add</button>
         {
           this.state.persons.length
           ? <Persons 
