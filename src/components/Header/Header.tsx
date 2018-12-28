@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { Fragment } from 'react';
 
 import styles from './Header.module.scss';
 
@@ -8,7 +8,10 @@ export interface IHeaderProps {
 
 const Header = (props: IHeaderProps) => {
   return (
-    <h1 className={styles.title}>{props.title}</h1>
+    <Fragment>
+      <h1 className={styles.title}>{props.title}</h1>
+      <p>Yeah!</p>
+    </Fragment>
   );
 };
 
