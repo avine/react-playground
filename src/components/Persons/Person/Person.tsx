@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { Component } from 'react';
 
 import styles from './Person.module.scss';
 
@@ -13,22 +13,32 @@ export interface IPersonProps {
   removeHandler: (person: IPerson) => void;
 }
 
-const Person = (props: IPersonProps) => {
-  const inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const newPerson: IPerson = { ...props.person, name: event.target.value };
-    props.changeHandler(newPerson);
+class Person extends Component<IPersonProps> {
+  inputRef = React.createRef<HTMLInputElement>();
+
+  inputHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newPerson: IPerson = { ...this.props.person, name: event.target.value };
+    this.props.changeHandler(newPerson);
   };
 
-  const buttonHandler = () => props.removeHandler(props.person);
+  buttonHandler = () => this.props.removeHandler(this.props.person);
 
-  return (
-    <p className={styles.Person}>
-      {props.person.name}
-      <br />
-      <input onChange={inputHandler} value={props.person.name} />
-      <button onClick={buttonHandler}>Remove</button>
-    </p>
-  );
-};
+  focusInput() {
+    if (this.inputRef.current) {
+      this.inputRef.current.focus();
+    }
+  }
+
+  render() {
+    return (
+      <p className={styles.Person}>
+        {this.props.person.name}
+        <br />
+        <input ref={this.inputRef} onChange={this.inputHandler} value={this.props.person.name} />
+        <button onClick={this.buttonHandler}>Remove</button>
+      </p>
+    );
+  }
+}
 
 export default Person;

@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
 import './App.css';
 
-import Persons from '../components/Persons/Persons';
+import React, { Component } from 'react';
+
 import Header from '../components/Header/Header';
 import { IPerson } from '../components/Persons/Person/Person';
+import Persons from '../components/Persons/Persons';
 
 interface IAppProps {
   title: string;
@@ -53,10 +54,10 @@ class App extends Component<IAppProps, IAppState> {
         <button onClick={this.addHandler}>Add</button>
         {
           this.state.persons.length
-          ? <Persons 
-              persons={this.state.persons} 
-              changeHandler={this.changeHandler} 
-              removeHandler={this.removeHandler} />     
+          ? <Persons
+              persons={this.state.persons}
+              changeHandler={this.changeHandler}
+              removeHandler={this.removeHandler} />
           : <p>No entries.</p>
         }
       </div>

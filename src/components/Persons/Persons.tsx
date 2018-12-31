@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { Component } from 'react';
 import Person, { IPerson } from './Person/Person';
 
 export interface IPersonsProps {
@@ -7,15 +7,28 @@ export interface IPersonsProps {
   removeHandler: (person: IPerson) => void;
 }
 
-const Persons = (props: IPersonsProps) => (
-  <div>
-    {props.persons.map(person => <Person 
-      key={person.id}
-      person={person}
-      changeHandler={props.changeHandler}
-      removeHandler={props.removeHandler}
-    />)}
-  </div>
-);
+class Persons extends Component<IPersonsProps> {
+  personRef = React.createRef<Person>();
+
+  componentDidUpdate() {
+    if (this.personRef.current) {
+      this.personRef.current.focusInput();
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        {this.props.persons.map((person, index) => <Person
+          ref={this.personRef}
+          key={person.id}
+          person={person}
+          changeHandler={this.props.changeHandler}
+          removeHandler={this.props.removeHandler}
+        />)}
+      </div>
+    );
+  }
+}
 
 export default Persons;
